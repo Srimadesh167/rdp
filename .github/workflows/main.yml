@@ -45,7 +45,7 @@ jobs:
       run: |
         $ErrorActionPreference = "Stop"
         $secret = "${{ secrets.CHROME_REMOTE_DESKTOP_CODE }}"
-        & "%PROGRAMFILES(X86)%\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code=$secret --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
+        & "C:\Program Files (x86)\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code=$secret --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
       env:
         CHROME_REMOTE_DESKTOP_CODE: ${{ secrets.CHROME_REMOTE_DESKTOP_CODE }}
 
