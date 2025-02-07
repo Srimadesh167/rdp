@@ -27,14 +27,11 @@ jobs:
     - name: Install Google Chrome
       run: choco install googlechrome -y --ignore-checksums
 
-    - name: Download Chrome Remote Desktop
-      run: Invoke-WebRequest https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi -OutFile chromeremotedesktophost.msi
+    - name: Download Chrome Remote Desktop Zip from GitHub
+      run: Invoke-WebRequest https://github.com/Srimadesh167/rdp/raw/main/133.0.6943.7.rar -OutFile chrome-remote-desktop.zip
 
-    - name: Install Chrome Remote Desktop
-      run: msiexec /i chromeremotedesktophost.msi /qn
-
-    - name: Verify Chrome Remote Desktop Installation
-      run: Get-ChildItem -Recurse "C:\Program Files (x86)\Google\Chrome Remote Desktop\CurrentVersion"
+    - name: Extract Chrome Remote Desktop
+      run: Expand-Archive chrome-remote-desktop.zip -DestinationPath "C:\Program Files (x86)\Google\Chrome Remote Desktop"
 
     - name: Enable Remote Desktop
       run: |
@@ -48,7 +45,7 @@ jobs:
       run: |
         $ErrorActionPreference = "Stop"
         $secret = "${{ secrets.CHROME_REMOTE_DESKTOP_CODE }}"
-        & "C:\Program Files (x86)\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code=$secret --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
+        & "C:\Program Files (x86)\Google\Chrome Remote Desktop\133.0.6943.7\remoting_start_host.exe" --code=$secret --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
       env:
         CHROME_REMOTE_DESKTOP_CODE: ${{ secrets.CHROME_REMOTE_DESKTOP_CODE }}
 
