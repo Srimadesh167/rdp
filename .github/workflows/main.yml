@@ -28,7 +28,7 @@ jobs:
       run: choco install googlechrome -y --ignore-checksums
 
     - name: Download Chrome Remote Desktop Zip from GitHub
-      run: Invoke-WebRequest https://github.com/Srimadesh167/rdp/raw/main/133.0.6943.7.rar -OutFile chrome-remote-desktop.zip
+      run: Invoke-WebRequest https://github.com/Srimadesh167/rdp/raw/main/133.0.6943.7.zip -OutFile chrome-remote-desktop.zip
 
     - name: Extract Chrome Remote Desktop
       run: Expand-Archive chrome-remote-desktop.zip -DestinationPath "C:\Program Files (x86)\Google\Chrome Remote Desktop"
