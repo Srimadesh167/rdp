@@ -27,18 +27,18 @@ jobs:
     - name: Install Google Chrome
       run: choco install googlechrome -y
 
+    - name: Download Chrome Remote Desktop
+      run: Invoke-WebRequest https://dl.google.com/edgedl/chrome-remote-desktop/chromeremotedesktophost.msi -OutFile chromeremotedesktophost.msi
+
+    - name: Install Chrome Remote Desktop
+      run: msiexec /i chromeremotedesktophost.msi /qn
+
     - name: Enable Remote Desktop
       run: |
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "UserAuthentication" -Value 1
         Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "P@ssw0rd!" -Force)
-    
-    - name: Download Chrome Remote Desktop
-      run: Invoke-WebRequest https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B9F4D3D7A-1D7A-2D52-8B20-3C6D9ED5A00E%7D%26lang%3Den%26browser%3D4%26usagestats%3D0%26appname%3DChrome%2520Remote%2520Desktop%26needsadmin%3Dtrue%26ap%3Dx64-stable%26installdataindex%3Ddefaultbrowser/update2/installers/ChromeRemoteDesktopSetup64.msi -OutFile ChromeRemoteDesktopSetup64.msi
-
-    - name: Install Chrome Remote Desktop
-      run: msiexec /i ChromeRemoteDesktopSetup64.msi /qn
     
     - name: Start Chrome Remote Desktop
       continue-on-error: true
