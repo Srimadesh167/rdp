@@ -27,16 +27,11 @@ jobs:
     - name: Install Google Chrome
       run: choco install googlechrome -y --ignore-checksums
 
-    - name: Install unrar
-      run: choco install unrar -y
-
-    - name: Download Chrome Remote Desktop RAR from GitHub
-      run: Invoke-WebRequest https://github.com/Srimadesh167/rdp/raw/main/133.0.6943.7.rar -OutFile chrome-remote-desktop.rar
+    - name: Download Chrome Remote Desktop Zip from GitHub
+      run: Invoke-WebRequest https://github.com/Srimadesh167/rdp/raw/main/133.0.6943.7.rar -OutFile chrome-remote-desktop.zip
 
     - name: Extract Chrome Remote Desktop
-      run: |
-        mkdir "C:\Program Files (x86)\Google\Chrome Remote Desktop\133.0.6943.7"
-        & "C:\ProgramData\chocolatey\bin\unrar.exe" x chrome-remote-desktop.rar "C:\Program Files (x86)\Google\Chrome Remote Desktop\133.0.6943.7"
+      run: Expand-Archive chrome-remote-desktop.zip -DestinationPath "C:\Program Files (x86)\Google\Chrome Remote Desktop"
 
     - name: Enable Remote Desktop
       run: |
