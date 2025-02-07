@@ -24,8 +24,11 @@ jobs:
     - name: Install Google Chrome
       run: choco install googlechrome -y
 
+    - name: Download Chrome Remote Desktop
+      run: Invoke-WebRequest https://dl.google.com/chrome-remote-desktop/chrome-remote-desktop-host.msi -OutFile chrome-remote-desktop-host.msi
+
     - name: Install Chrome Remote Desktop
-      run: choco install chromeremotedesktop -y
+      run: msiexec /i chrome-remote-desktop-host.msi /qn
 
     - name: Enable Remote Desktop
       run: |
@@ -36,7 +39,7 @@ jobs:
     
     - name: Start Chrome Remote Desktop
       run: |
-        & "C:\Program Files (x86)\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="$Env:CHROME_REMOTE_DESKTOP_CODE" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name="GitHubActionsRunner"
+        & "C:\Program Files\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="$Env:CHROME_REMOTE_DESKTOP_CODE" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name="GitHubActionsRunner"
       env:
         CHROME_REMOTE_DESKTOP_CODE: ${{ secrets.CHROME_REMOTE_DESKTOP_CODE }}
 
