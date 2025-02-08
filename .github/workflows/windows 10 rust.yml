@@ -18,7 +18,9 @@ jobs:
         $username = "runneradmin"
         $password = "runneradmin"
         $securePassword = ConvertTo-SecureString $password -AsPlainText -Force
-        New-LocalUser $username -Password $securePassword -FullName "Runner Admin" -Description "User for RDP access" -PasswordNeverExpires
+        if (-not (Get-LocalUser -Name $username -ErrorAction SilentlyContinue)) {
+          New-LocalUser $username -Password $securePassword -FullName "Runner Admin" -Description "User for RDP access" -PasswordNeverExpires
+        }
         Add-LocalGroupMember -Group "Remote Desktop Users" -Member $username
 
     - name: Install OpenSSH Server
